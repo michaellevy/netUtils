@@ -8,6 +8,9 @@
 #' @return By default, a table of degree counts from 0 to max degree. If \code{df == TRUE}, a data.frame with a column for degree and a column for \code{form}.
 #'
 #' @export
+#' @importFrom network is.directed
+#' @importFrom network network.size
+#' @importFrom sna degree
 #'
 #' @examples
 #' n <- network(rgraph(10, tprob = .1))
@@ -16,11 +19,11 @@
 
 degDist <- function(net, form = "p", df = FALSE) {
 
-  gmode <- if (network::is.directed(net)) "digraph" else "graph"
-  degs <- sna::degree(net, gmode = gmode)
+  gmode <- if (is.directed(net)) "digraph" else "graph"
+  degs <- degree(net, gmode = gmode)
   degs <- table(factor(degs, levels = 0:max(degs)))
   if (form == "p")
-    degs <- degs / network::network.size(net)
+    degs <- degs / network.size(net)
   if (df)
     degs <- structure(as.data.frame(degs), names = c("degree", form))
 

@@ -1,8 +1,8 @@
 #' Harmonic mean path length
 #'
-#' @param net network object. if `net` is directed, will be made undirected by the weak rule.
+#' @param net network object. if `net` is directed, will be made undirected by the weak rule (if i->j or j->i then i-j).
 #'
-#' @return Harmonic mean path length between pairs of nodes.
+#' @return Harmonic mean of path lengths between dyads.
 #' @references Newman MEJ, 2003. The structure and function of complex networks. SIAM Review.
 #' @export
 #' @importFrom network is.directed
