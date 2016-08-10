@@ -7,10 +7,10 @@
 HMPL(net)
 }
 \arguments{
-\item{net}{network object. if `net` is directed, will be made undirected by the weak rule.}
+\item{net}{network object. if `net` is directed, will be made undirected by the weak rule (if i->j or j->i then i-j).}
 }
 \value{
-Harmonic mean path length between pairs of nodes.
+Harmonic mean of path lengths between dyads.
 }
 \description{
 Harmonic mean path length
