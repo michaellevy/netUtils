@@ -2,23 +2,35 @@
 % Please edit documentation in R/makeNetwork.R
 \name{makeNetwork}
 \alias{makeNetwork}
-\title{Title Make a network ob with (stochastic) density}
+\title{Title Make a network ob with exact density or average degree}
 \usage{
-makeNetwork(nSize, nDensity, directed = FALSE)
+makeNetwork(n, density = NULL, meanDegree = NULL, directed = FALSE)
 }
 \arguments{
-\item{nSize}{Number of nodes}
+\item{n}{Number of nodes}
 
-\item{nDensity}{Probability of each edge}
+\item{density}{Probability of each edge}
+
+\item{meanDegree}{Mean degree of nodes (total degree, if directed)}
+
+\item{directed}{The gmode, as it were}
 }
 \value{
 network object
 }
 \description{
-Title Make a network ob with (stochastic) density
+Title Make a network ob with exact density or average degree
+}
+\details{
+Tries to make a network object with exactly the density or mean
+degree specified; may be slightly off due to rounding, e.g. a 5-node network
+with meanDegree = .1 implies one-quarter of an edge for the whole network, which
+will get rounded down to produce an empty network.
 }
 \examples{
 makeNetwork(10, .05)
-makeNetwork(10, .05, TRUE)
+makeNetwork(10, .05, directed = TRUE)
+makeNetwork(100, meanDegree = .1)
+makeNetwork(5, meanDegree = .1)  # Note rounding
 }
 
