@@ -13,6 +13,7 @@
 #' @importFrom network get.edgeIDs
 #' @importFrom network delete.edges
 #' @importFrom network add.edge
+#' @importFrom stats plogis
 #'
 #' @examples
 #' \dontrun{

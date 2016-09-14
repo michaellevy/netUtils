@@ -1,8 +1,11 @@
 #' Title Get degree distributions
 #'
-#' @param graphs list of networks
+#' @param graphs list of networks, as from ergm::simulate
 #'
 #' @return data.frame with degree, times observed in each graph, and graph number
+#'
+#' @details Note that `degDist()` is for a single network. This returns the distribution of degree distributions for a stack of graphs, typically from a call to ergm::simulate with nsim > 1.
+#'
 #' @export
 #' @importFrom sna degree
 #' @importFrom gtools smartbind
@@ -10,9 +13,10 @@
 #' @importFrom dplyr mutate
 #' @importFrom dplyr arrange
 #' @importFrom magrittr %>%
+#' @importFrom network is.network
 #'
 #' @examples
-#' getDegreeDist(replicate(5, makeNetwork(10, .1)))
+#' getDegreeDist(replicate(5, makeNetwork(10, .1), simplify = FALSE))
 getDegreeDist = function(graphs) {
   # For a list of undirected networks, calculates degree distributions
 
@@ -22,11 +26,13 @@ getDegreeDist = function(graphs) {
       as.data.frame(stringsAsFactors = FALSE) %>%
       structure("names" = c('degree', 'count'))
     deg$degree = as.integer(deg$degree)
+    if(length(setdiff(1:max(deg$degree), unique(deg$degree)))) {
     deg = rbind(
       data.frame(degree = setdiff(1:max(deg$degree), unique(deg$degree)),
                  count = 0),
       deg) %>%
       arrange(degree)
+    }
     return(deg)
   }
 

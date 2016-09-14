@@ -16,7 +16,7 @@ clustering coefficient, \deqn{\dfrac{3 \times triangles}{two-paths}}
 Clustering coefficient
 }
 \examples{
-n <- network(rgraph(10, tprob = .3))
+n <- makeNetwork(10, .3)
 clusteringCoef(n)
 }
 

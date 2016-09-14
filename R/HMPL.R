@@ -10,7 +10,7 @@
 #' @importFrom sna geodist
 #'
 #' @examples
-#' n <- network(rgraph(10, tprob = .1))
+#' n <- makeNetwork(10, .1)
 #' HMPL(n)
 
 HMPL <- function(net) {

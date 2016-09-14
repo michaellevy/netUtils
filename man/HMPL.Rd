@@ -16,7 +16,7 @@ Harmonic mean of path lengths between dyads.
 Harmonic mean path length
 }
 \examples{
-n <- network(rgraph(10, tprob = .1))
+n <- makeNetwork(10, .1)
 HMPL(n)
 }
 \references{

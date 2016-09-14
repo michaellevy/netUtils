@@ -8,7 +8,7 @@
 #' @importFrom ergm summary.formula
 #'
 #' @examples
-#' n <- network(rgraph(10, tprob = .3))
+#' n <- makeNetwork(10, .3)
 #' clusteringCoef(n)
 
 clusteringCoef = function(net) {

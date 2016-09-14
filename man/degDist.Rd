@@ -7,7 +7,7 @@
 degDist(net, form = "p", df = FALSE)
 }
 \arguments{
-\item{net}{network object}
+\item{net}{network}
 
 \item{form}{one of \code{c("p", "count")}. "p" (default) returns the proportion of nodes with each degree. Anything else returns the count, and if \code{df == TRUE} this value will be the name of the variable in the data.frame.}
 
@@ -20,7 +20,7 @@ By default, a table of degree counts from 0 to max degree. If \code{df == TRUE},
 Degree distribution
 }
 \examples{
-n <- network(rgraph(10, tprob = .1))
+n <- makeNetwork(10, .1)
 degDist(n)
 degDist(n, "count", df = TRUE)
 }

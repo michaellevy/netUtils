@@ -7,7 +7,7 @@
 getDegreeDist(graphs)
 }
 \arguments{
-\item{graphs}{list of networks}
+\item{graphs}{list of networks, as from ergm::simulate}
 }
 \value{
 data.frame with degree, times observed in each graph, and graph number
@@ -15,7 +15,10 @@ data.frame with degree, times observed in each graph, and graph number
 \description{
 Title Get degree distributions
 }
+\details{
+Note that `degDist()` is for a single network. This returns the distribution of degree distributions for a stack of graphs, typically from a call to ergm::simulate with nsim > 1.
+}
 \examples{
-getDegreeDist(replicate(5, makeNetwork(10, .1)))
+getDegreeDist(replicate(5, makeNetwork(10, .1), simplify = FALSE))
 }
 

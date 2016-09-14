@@ -8,7 +8,11 @@ Description: Some simple utility functions for working with statnet-network obje
 License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Depends:
+Imports:
+  dplyr,
+  tidyr,
+  magrittr,
+  gtools,
   network,
   sna,
   ergm
