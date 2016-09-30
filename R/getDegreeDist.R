@@ -1,4 +1,4 @@
-#' Title Get degree distributions
+#' Get degree distributions
 #'
 #' @param graphs list of networks, as from ergm::simulate
 #'

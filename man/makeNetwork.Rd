@@ -2,7 +2,7 @@
 % Please edit documentation in R/makeNetwork.R
 \name{makeNetwork}
 \alias{makeNetwork}
-\title{Title Make a network ob with exact density or average degree}
+\title{Make a network ob with exact density or average degree}
 \usage{
 makeNetwork(n, density = NULL, meanDegree = NULL, directed = FALSE)
 }
@@ -19,7 +19,7 @@ makeNetwork(n, density = NULL, meanDegree = NULL, directed = FALSE)
 network object
 }
 \description{
-Title Make a network ob with exact density or average degree
+Make a network ob with exact density or average degree
 }
 \details{
 Tries to make a network object with exactly the density or mean

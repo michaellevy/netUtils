@@ -10,7 +10,7 @@ clusteringCoef(net)
 \item{net}{network object}
 }
 \value{
-clustering coefficient, \deqn{\dfrac{3 \times triangles}{two-paths}}
+clustering coefficient, \deqn{\frac{3 \times triangles}{two-paths}}
 }
 \description{
 Clustering coefficient

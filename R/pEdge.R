@@ -1,4 +1,4 @@
-#' Title Calculate edge probabilities implied by an ERGM
+#' Calculate edge probabilities implied by an ERGM
 #'
 #' @param mod ERGM
 #' @param net network, taken from ERGM by default
@@ -10,6 +10,7 @@
 #' @importFrom network network.size
 #' @importFrom network get.network.attribute
 #' @importFrom ergm summary.formula
+#' @importFrom ergm ergm
 #' @importFrom network get.edgeIDs
 #' @importFrom network delete.edges
 #' @importFrom network add.edge
@@ -70,6 +71,7 @@ pEdge = function(mod, net = mod$network, edgelist = NULL) {
 
   # If there are constraints in the ERGM, e.g. number of edges rather than a density term, the relative probabilities will be right, but absolute values will be off.
   # However, the average probability of an edge has to be density of the graph, so dividing the calculated mean and multiplying by the empirical density corrects this.
+  attr(mod$constrained, "class")
   odds = p / (1 - p)
   trueMeanOdds = network.density(net) / (1 - network.density(net))
   adjustedOdds = odds * trueMeanOdds / mean(odds)

@@ -1,4 +1,4 @@
-#' Title Make a network ob with exact density or average degree
+#' Make a network ob with exact density or average degree
 #'
 #' @param n Number of nodes
 #' @param density Probability of each edge

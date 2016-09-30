@@ -2,7 +2,7 @@
 % Please edit documentation in R/getDegreeDist.R
 \name{getDegreeDist}
 \alias{getDegreeDist}
-\title{Title Get degree distributions}
+\title{Get degree distributions}
 \usage{
 getDegreeDist(graphs)
 }
@@ -13,7 +13,7 @@ getDegreeDist(graphs)
 data.frame with degree, times observed in each graph, and graph number
 }
 \description{
-Title Get degree distributions
+Get degree distributions
 }
 \details{
 Note that `degDist()` is for a single network. This returns the distribution of degree distributions for a stack of graphs, typically from a call to ergm::simulate with nsim > 1.

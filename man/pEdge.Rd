@@ -2,7 +2,7 @@
 % Please edit documentation in R/pEdge.R
 \name{pEdge}
 \alias{pEdge}
-\title{Title Calculate edge probabilities implied by an ERGM}
+\title{Calculate edge probabilities implied by an ERGM}
 \usage{
 pEdge(mod, net = mod$network, edgelist = NULL)
 }
@@ -17,7 +17,7 @@ pEdge(mod, net = mod$network, edgelist = NULL)
 data.frame with edgelist and column of edge probabilities
 }
 \description{
-Title Calculate edge probabilities implied by an ERGM
+Calculate edge probabilities implied by an ERGM
 }
 \details{
 For any decent size network this will take a while because each edge has to be added to an removed from the network. So, it's probably worth compiling the function with `c_pedge = compiler::compile(pEdge)`.
