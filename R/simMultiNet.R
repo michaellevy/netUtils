@@ -17,19 +17,11 @@ simMultiNet = function(n, e, directed = TRUE, loops = FALSE) {
 
   net = network::network.initialize(n, directed = directed, loops = loops, multi = TRUE)
 
-  heads = sample(seq_len(n), e, replace = TRUE)
-  tails = sample(seq_len(n), e, replace = TRUE)
+  edges = replicate(e, sample(seq_len(n), 2, replace = loops), simplify = FALSE)
+  if(!directed) edges = lapply(edges, sort)
+  edges = do.call(rbind, edges)
 
-  # Either this assign tails with by sapplying for positions.
-  # The bigger the network, the less likely loops are,
-  # so I don't think this will loop too many times
-  if(!loops)
-    while(any(heads == tails)) {
-      repl = which(heads == tails)
-      tails[repl] = sample(seq_len(n), length(repl), replace = TRUE)
-    }
-
-  network::add.edges(net, head = heads, tail = tails)
+  network::add.edges(net, head = edges[, 1], tail = edges[, 2])
 
   return(net)
 

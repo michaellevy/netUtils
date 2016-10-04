@@ -15,4 +15,5 @@ Imports:
   gtools,
   network,
   sna,
-  ergm
+  ergm,
+  networkDynamic
