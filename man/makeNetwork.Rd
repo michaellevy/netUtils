@@ -2,9 +2,10 @@
 % Please edit documentation in R/makeNetwork.R
 \name{makeNetwork}
 \alias{makeNetwork}
-\title{Make a network ob with exact density or average degree}
+\title{Make a uniform random network(s) with exact density or average degree}
 \usage{
-makeNetwork(n, density = NULL, meanDegree = NULL, directed = FALSE)
+makeNetwork(n, density = NULL, meanDegree = NULL, directed = FALSE,
+  num = 1)
 }
 \arguments{
 \item{n}{Number of nodes}
@@ -14,12 +15,14 @@ makeNetwork(n, density = NULL, meanDegree = NULL, directed = FALSE)
 \item{meanDegree}{Mean degree of nodes (total degree, if directed)}
 
 \item{directed}{The gmode, as it were}
+
+\item{num}{number of networks to simulate}
 }
 \value{
-network object
+network object or list thereof if num > 1
 }
 \description{
-Make a network ob with exact density or average degree
+Make a uniform random network(s) with exact density or average degree
 }
 \details{
 Tries to make a network object with exactly the density or mean
