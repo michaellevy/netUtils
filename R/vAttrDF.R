@@ -13,6 +13,8 @@ vAttrDF = function(net) {
   ats = structure(data.frame(
     lapply(ats, function(vAt) network::get.vertex.attribute(net, vAt))
     ), names = ats)
+  # Remove annoying "na" attribute if none are missing
+  ats = ats[, -which(names(ats) == "na")]
   vn = colnames(ats) == "vertex.names"
   ats[, c(which(vn), which(!vn))]
 }
