@@ -26,7 +26,7 @@
 #' }
 #'
 #' @details For any decent size network this will take a while because each edge has to be added to an removed from the network. So, it's probably worth compiling the function with `c_pedge = compiler::compile(pEdge)`.
-pEdge = function(mod, net = mod$network, edgelist = NULL) {
+pEdge = function(mod, net = mod$network, edgelist = NULL, returnOnlyPs = FALSE) {
 
   gmode = if(is.directed(net)) 'digraph' else 'graph'
 
@@ -51,6 +51,10 @@ pEdge = function(mod, net = mod$network, edgelist = NULL) {
   modelFormula = mod$formula
   baselineStats = summary(modelFormula, basis = net)
 
+
+  if(any(is.infinite(coefs)))
+    warning("Infinite coefficients detected. They will be ignored for edges where their change statistic is zero.")
+
   p =
     sapply(1:nrow(edgelist), function(i) {
       h = edgelist[i, 1]
@@ -59,11 +63,11 @@ pEdge = function(mod, net = mod$network, edgelist = NULL) {
       # If the edge exists (ie, length(eid) != 0), delete it, calc stats, and return baseline - new
       if(length(eid)) {
         delete.edges(net, eid)
-        val = plogis(sum(coefs * (baselineStats - summary(modelFormula, basis = net))))
+        val = plogis(sum(coefs * (baselineStats - summary(modelFormula, basis = net)), na.rm = TRUE))
         add.edge(net, h, t)
       } else {
         add.edge(net, h, t)
-        val = plogis(sum(coefs * (summary(modelFormula, basis = net) - baselineStats)))
+        val = plogis(sum(coefs * (summary(modelFormula, basis = net) - baselineStats), na.rm = TRUE))
         delete.edges(net, get.edgeIDs(net, h, t))
       }
       val
@@ -76,11 +80,14 @@ pEdge = function(mod, net = mod$network, edgelist = NULL) {
     odds = p / (1 - p)
     trueMeanOdds = network.density(net) / (1 - network.density(net))
     adjustedOdds = odds * trueMeanOdds / mean(odds)
-    edgelist$p = adjustedOdds / (1 + adjustedOdds)
-  } else {
-    edgelist$p = p
+    p = adjustedOdds / (1 + adjustedOdds)
   }
 
+  if(returnOnlyPs) {
+    return(p)
+  } else {
+    edgelist$p = p
+    return(edgelist)
+  }
 
-  return(edgelist)
 }
