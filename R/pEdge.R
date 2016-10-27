@@ -71,11 +71,16 @@ pEdge = function(mod, net = mod$network, edgelist = NULL) {
 
   # If there are constraints in the ERGM, e.g. number of edges rather than a density term, the relative probabilities will be right, but absolute values will be off.
   # However, the average probability of an edge has to be density of the graph, so dividing the calculated mean and multiplying by the empirical density corrects this.
-  attr(mod$constrained, "class")
-  odds = p / (1 - p)
-  trueMeanOdds = network.density(net) / (1 - network.density(net))
-  adjustedOdds = odds * trueMeanOdds / mean(odds)
-  edgelist$p = adjustedOdds / (1 + adjustedOdds)
+  # Note that this doesn't get applied to ERGMs w/o a density term, so they will have a mean prob of .5 (I think)
+  if(!(is.null(mod$constraints[[2]]) || mod$constraints[[2]] == ".")) {   # Test for any constraints
+    odds = p / (1 - p)
+    trueMeanOdds = network.density(net) / (1 - network.density(net))
+    adjustedOdds = odds * trueMeanOdds / mean(odds)
+    edgelist$p = adjustedOdds / (1 + adjustedOdds)
+  } else {
+    edgelist$p = p
+  }
+
 
   return(edgelist)
 }
