@@ -4,7 +4,8 @@
 \alias{pEdge}
 \title{Calculate edge probabilities implied by an ERGM}
 \usage{
-pEdge(mod, net = mod$network, edgelist = NULL)
+pEdge(mod, net = mod$network, edgelist = NULL, returnEdgelist = TRUE,
+  returnObserved = FALSE)
 }
 \arguments{
 \item{mod}{ERGM}
@@ -12,6 +13,10 @@ pEdge(mod, net = mod$network, edgelist = NULL)
 \item{net}{network, taken from ERGM by default}
 
 \item{edgelist}{two-column edgelist, by default will create one with all possible edges present}
+
+\item{returnEdgelist}{want the two columns with the edgelist back?}
+
+\item{returnObserved}{want the (dichotomous) observed edge values back?}
 }
 \value{
 data.frame with edgelist and column of edge probabilities
@@ -20,6 +25,8 @@ data.frame with edgelist and column of edge probabilities
 Calculate edge probabilities implied by an ERGM
 }
 \details{
+if !returnEdgelist & !returnObserved, you get a vector back. Otherwise, a data.frame
+
 For any decent size network this will take a while because each edge has to be added to an removed from the network. So, it's probably worth compiling the function with `c_pedge = compiler::compile(pEdge)`.
 }
 \examples{

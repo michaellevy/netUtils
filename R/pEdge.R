@@ -3,6 +3,9 @@
 #' @param mod ERGM
 #' @param net network, taken from ERGM by default
 #' @param edgelist two-column edgelist, by default will create one with all possible edges present
+#' @param returnEdgelist want the two columns with the edgelist back?
+#' @param returnObserved want the (dichotomous) observed edge values back?
+#' @details if !returnEdgelist & !returnObserved, you get a vector back. Otherwise, a data.frame
 #'
 #' @return data.frame with edgelist and column of edge probabilities
 #' @export
@@ -26,7 +29,7 @@
 #' }
 #'
 #' @details For any decent size network this will take a while because each edge has to be added to an removed from the network. So, it's probably worth compiling the function with `c_pedge = compiler::compile(pEdge)`.
-pEdge = function(mod, net = mod$network, edgelist = NULL, returnOnlyPs = FALSE) {
+pEdge = function(mod, net = mod$network, edgelist = NULL, returnEdgelist = TRUE, returnObserved = FALSE) {
 
   gmode = if(is.directed(net)) 'digraph' else 'graph'
 
@@ -56,38 +59,40 @@ pEdge = function(mod, net = mod$network, edgelist = NULL, returnOnlyPs = FALSE) 
     warning("Infinite coefficients detected. They will be ignored for edges where their change statistic is zero.")
 
   p =
-    sapply(1:nrow(edgelist), function(i) {
-      h = edgelist[i, 1]
-      t = edgelist[i, 2]
-      eid = get.edgeIDs(net, h, t)
-      # If the edge exists (ie, length(eid) != 0), delete it, calc stats, and return baseline - new
-      if(length(eid)) {
-        delete.edges(net, eid)
-        val = plogis(sum(coefs * (baselineStats - summary(modelFormula, basis = net)), na.rm = TRUE))
-        add.edge(net, h, t)
-      } else {
-        add.edge(net, h, t)
-        val = plogis(sum(coefs * (summary(modelFormula, basis = net) - baselineStats), na.rm = TRUE))
-        delete.edges(net, get.edgeIDs(net, h, t))
-      }
-      val
-    })
+    do.call(rbind,
+            lapply(1:nrow(edgelist), function(i) {
+              h = edgelist[i, 1]
+              t = edgelist[i, 2]
+              eid = get.edgeIDs(net, h, t)
+              # If the edge exists (ie, length(eid) != 0), delete it, calc stats, and return baseline - new
+              if(length(eid)) {
+                delete.edges(net, eid)
+                val = plogis(sum(coefs * (baselineStats - summary(modelFormula, basis = net)), na.rm = TRUE))
+                add.edge(net, h, t)
+              } else {
+                add.edge(net, h, t)
+                val = plogis(sum(coefs * (summary(modelFormula, basis = net) - baselineStats), na.rm = TRUE))
+                delete.edges(net, get.edgeIDs(net, h, t))
+              }
+              data.frame(node1 = h, node2 = t, actual = if(length(eid)) 1 else 0, p = val)
+            })
+    )
 
   # If there are constraints in the ERGM, e.g. number of edges rather than a density term, the relative probabilities will be right, but absolute values will be off.
   # However, the average probability of an edge has to be density of the graph, so dividing the calculated mean and multiplying by the empirical density corrects this.
   # Note that this doesn't get applied to ERGMs w/o a density term, so they will have a mean prob of .5 (I think)
   if(!(is.null(mod$constraints[[2]]) || mod$constraints[[2]] == ".")) {   # Test for any constraints
-    odds = p / (1 - p)
+    odds = p$p / (1 - p$p)
     trueMeanOdds = network.density(net) / (1 - network.density(net))
     adjustedOdds = odds * trueMeanOdds / mean(odds)
-    p = adjustedOdds / (1 + adjustedOdds)
+    p$p = adjustedOdds / (1 + adjustedOdds)
   }
 
-  if(returnOnlyPs) {
-    return(p)
-  } else {
-    edgelist$p = p
-    return(edgelist)
-  }
+  if(!returnObserved)
+    p = p[, -which(names(p) == "actual")]
 
+  if(!returnEdgelist)
+    p = p[, -grep("node", names(p))]
+
+  return(p)
 }
