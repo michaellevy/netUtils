@@ -17,6 +17,7 @@
 #' @importFrom network get.edgeIDs
 #' @importFrom network delete.edges
 #' @importFrom network add.edge
+#' @importFrom network network.density
 #' @importFrom stats plogis
 #'
 #' @examples
