@@ -4,10 +4,12 @@
 \alias{HMPL}
 \title{Harmonic mean path length}
 \usage{
-HMPL(net)
+HMPL(net, makeUndirected = FALSE)
 }
 \arguments{
 \item{net}{network object. if `net` is directed, will be made undirected by the weak rule (if i->j or j->i then i-j).}
+
+\item{makeUndirected}{Should directed network be made undirected by weak rule? Default is FALSE}
 }
 \value{
 Harmonic mean of path lengths between dyads.
@@ -18,8 +20,9 @@ Harmonic mean path length
 \examples{
 n <- makeNetwork(10, .1)
 HMPL(n)
+n <- makeNetwork(10, .1, directed = TRUE)
+HMPL(n)
 }
 \references{
 Newman MEJ, 2003. The structure and function of complex networks. SIAM Review.
 }
-

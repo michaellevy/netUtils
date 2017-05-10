@@ -24,4 +24,3 @@ n <- makeNetwork(10, .1)
 degDist(n)
 degDist(n, "count", df = TRUE)
 }
-

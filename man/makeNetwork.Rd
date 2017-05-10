@@ -36,4 +36,3 @@ makeNetwork(10, .05, directed = TRUE)
 makeNetwork(100, meanDegree = .1)
 makeNetwork(5, meanDegree = .1)  # Note rounding
 }
-

@@ -24,4 +24,3 @@ Simulate multiple-edges network
 \examples{
 simMultiNet(5, 15)
 }
-

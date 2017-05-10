@@ -21,4 +21,3 @@ Note that `degDist()` is for a single network. This returns the distribution of 
 \examples{
 getDegreeDist(replicate(5, makeNetwork(10, .1), simplify = FALSE))
 }
-

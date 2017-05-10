@@ -19,4 +19,3 @@ Clustering coefficient
 n <- makeNetwork(10, .3)
 clusteringCoef(n)
 }
-

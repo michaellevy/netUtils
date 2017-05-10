@@ -19,4 +19,3 @@ Make a simple network with edge attribute from a multiplex network
 collapseMultiNet(simMultiNet(10, 1e3))
 collapseMultiNet(simMultiNet(10, 1e3, directed = FALSE))
 }
-

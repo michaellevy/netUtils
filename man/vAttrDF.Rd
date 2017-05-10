@@ -7,7 +7,7 @@
 vAttrDF(net)
 }
 \arguments{
-\item{net}{}
+\item{net}{the network}
 }
 \value{
 data.frame with vertex.names as first column, vertex.attributes as rest
@@ -15,4 +15,3 @@ data.frame with vertex.names as first column, vertex.attributes as rest
 \description{
 Vertex attributes as a data.frame
 }
-

@@ -20,4 +20,3 @@ Title delta GWD
 \examples{
 deltaGWD(1:10, 1.5)
 }
-

@@ -1,6 +1,6 @@
 #' Vertex attributes as a data.frame
 #'
-#' @param net
+#' @param net the network
 #'
 #' @return data.frame with vertex.names as first column, vertex.attributes as rest
 #' @export
