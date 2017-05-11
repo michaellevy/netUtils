@@ -21,7 +21,7 @@ HMPL <- function(net, makeUndirected = FALSE) {
     if (!is.directed(net)) {
       stop("You said to make ", deparse(substitute(net)), " undirected, but it already is.")
     } else {
-      net <- symmetrize(net[,], rule = "weak")
+      net <- symmetrize(net, rule = "weak")
     }
   }
 
