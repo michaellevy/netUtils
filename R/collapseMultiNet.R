@@ -28,7 +28,9 @@ collapseMultiNet = function(net) {
   el = dplyr::count(el, tail, head)
   n = network::network(el, directed = dir,
                        ignore.eval = FALSE, names.eval = 'NumberTies')
+  ties = network::get.edge.attribute(n, "NumberTies")
   n = network(sna::add.isolates(n, length(vAt$vertex.names) - network::network.size(n)))
+  network::set.edge.attribute(n, "NumberTies", ties)
 
   for(at in names(vAt))
     set.vertex.attribute(n, at, vAt[[at]])
