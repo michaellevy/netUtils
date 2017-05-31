@@ -17,14 +17,19 @@
 #' collapseMultiNet(simMultiNet(10, 1e3, directed = FALSE))
 collapseMultiNet = function(net) {
 
+  if (network.size(net) <= 4)
+    warning("collapseMultiNet may not work on very small networks.
+            3x3 edgelist gets interpreted as adjacency matrix. PRs welcome!")
+
   vAt = sapply(list.vertex.attributes(net), function(x) get.vertex.attribute(net, x),
                simplify = FALSE, USE.NAMES = TRUE)
-
   dir = is.directed(net)
   el = networkDynamic::get.edge.activity(net, as.spellList = TRUE)[, 3:4]
   el = dplyr::count(el, tail, head)
   n = network::network(el, directed = dir,
                        ignore.eval = FALSE, names.eval = 'NumberTies')
+  n = network(sna::add.isolates(n, length(vAt$vertex.names) - network::network.size(n)))
+
   for(at in names(vAt))
     set.vertex.attribute(n, at, vAt[[at]])
   return(n)

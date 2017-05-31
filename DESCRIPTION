@@ -5,6 +5,8 @@ Version: 0.1.0
 Authors@R: person("Michael", "Levy", email = "malevy@ucdavis.edu", role = c("aut",
     "cre"))
 Description: Some simple utility functions for working with statnet-network objects.
+URL: https://github.com/michaellevy/netUtils
+BugReports: https://github.com/michaellevy/netUtils/issues
 License: MIT + file LICENSE
 LazyData: TRUE
 RoxygenNote: 6.0.1
