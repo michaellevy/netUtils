@@ -1,6 +1,7 @@
 #' Make a simple network with edge attribute from a multiplex network
 #'
 #' @param net Network
+#' @param keepLoops Defaults to FALSE for legacy reasons, but should probably be TRUE
 #'
 #' @return Network with edge attribute "NumberTies"
 #' @export
@@ -15,7 +16,7 @@
 #' @examples
 #' collapseMultiNet(simMultiNet(10, 1e3))
 #' collapseMultiNet(simMultiNet(10, 1e3, directed = FALSE))
-collapseMultiNet = function(net) {
+collapseMultiNet = function(net, keepLoops = FALSE) {
 
   if (network.size(net) <= 4)
     warning("collapseMultiNet may not work on very small networks.
@@ -26,10 +27,11 @@ collapseMultiNet = function(net) {
   dir = is.directed(net)
   el = networkDynamic::get.edge.activity(net, as.spellList = TRUE)[, 3:4]
   el = dplyr::count(el, tail, head)
-  n = network::network(el, directed = dir,
+  n = network::network(el, directed = dir, loops = keepLoops,
                        ignore.eval = FALSE, names.eval = 'NumberTies')
   ties = network::get.edge.attribute(n, "NumberTies")
-  n = network(sna::add.isolates(n, length(vAt$vertex.names) - network::network.size(n)))
+  n = network(sna::add.isolates(n, length(vAt$vertex.names) - network::network.size(n))
+              , loops = keepLoops)
   network::set.edge.attribute(n, "NumberTies", ties)
 
   for(at in names(vAt))

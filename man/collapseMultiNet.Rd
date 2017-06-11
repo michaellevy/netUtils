@@ -4,10 +4,12 @@
 \alias{collapseMultiNet}
 \title{Make a simple network with edge attribute from a multiplex network}
 \usage{
-collapseMultiNet(net)
+collapseMultiNet(net, keepLoops = FALSE)
 }
 \arguments{
 \item{net}{Network}
+
+\item{keepLoops}{Defaults to FALSE for legacy reasons, but should probably be TRUE}
 }
 \value{
 Network with edge attribute "NumberTies"
